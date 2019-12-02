@@ -1,0 +1,68 @@
+Matikan mode tanpa kepala - terkadang berguna untuk melihat apa yang ditampilkan oleh browser. Alih-alih meluncurkan dalam mode tanpa kepala, luncurkan versi lengkap browser menggunakan tanpa kepala: false:
+
+ browser peramban = menunggu puppeteer.launch ({headless: false});
+Lambatkan - opsi slowMo memperlambat operasi Puppeteer dengan jumlah milidetik yang ditentukan. Ini cara lain untuk membantu melihat apa yang terjadi.
+
+ browser peramban = tunggu puppeteer.launch ({
+   tanpa kepala: salah,
+   slowMo: 250 // melambat 250ms
+ });
+Capture output console - Anda dapat mendengarkan acara konsol. Ini juga berguna ketika men-debug kode di page.evaluate ():
+
+ page.on ('console', msg => console.log ('PAGE LOG:', msg.text ()));
+
+ tunggu page.evaluate (() => console.log (`url adalah $ {location.href}`));
+Gunakan debugger di browser kode aplikasi
+
+Ada dua konteks eksekusi: node.js yang menjalankan kode uji, dan browser yang menjalankan kode aplikasi sedang diuji. Ini memungkinkan Anda men-debug kode di browser kode aplikasi; yaitu kode di dalam evaluasi ().
+
+Gunakan {devtools: true} saat meluncurkan Puppeteer:
+
+browser peramban = tunggu puppeteer.launch ({devtools: true});
+
+Ubah batas waktu uji standar:
+
+jest: jest.setTimeout (100000);
+
+jasmine: jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+
+mocha: this.timeout (100000); (jangan lupa ganti tes untuk menggunakan fungsi dan bukan '=>')
+
+Tambahkan pernyataan evaluasi dengan debugger di dalam / tambahkan debugger ke pernyataan evaluasi yang ada:
+
+tunggu page.evaluate (() => {debugger;});
+
+Tes sekarang akan berhenti dieksekusi dalam pernyataan evaluasi di atas, dan kromium akan berhenti dalam mode debug.
+
+Gunakan debugger di node.js
+
+Ini akan memungkinkan Anda men-debug kode uji. Misalnya, Anda dapat melangkah menunggu page.click () di skrip node.js dan melihat klik yang terjadi di browser kode aplikasi.
+
+Perhatikan bahwa Anda tidak akan dapat menjalankan menunggu halaman.klik () di konsol DevTools karena bug Chromium ini. Jadi, jika Anda ingin mencoba sesuatu, Anda harus menambahkannya ke file pengujian Anda.
+
+Tambahkan debugger; untuk pengujian Anda, misalnya:
+debugger;
+tunggu page.click ('a [target = _blank]');
+Setel tanpa kepala menjadi false
+Jalankan node --inspect-brk, misal node --inspect-brk node_modules / .bin / jest test
+Di Chrome, buka chrome: // inspect / # devices dan klik inspect
+Di browser pengujian yang baru dibuka, ketik F8 untuk melanjutkan eksekusi pengujian
+Sekarang debugger Anda akan dipukul dan Anda dapat men-debug di browser uji
+Aktifkan logging verbose - lalu lintas protokol DevTools internal akan dicatat melalui modul debug di bawah namespace puppeteer.
+
+ # Pendataan dasar verbose
+ env DEBUG = "puppeteer: *" node script.js
+
+ # Lalu lintas protokol bisa agak berisik. Contoh ini memfilter semua pesan domain Jaringan
+ env DEBUG = "dalang: *" env DEBUG_COLORS = true node script.js 2> & 1 | grep -v '"Network'
+Debug kode Puppeteer (node) Anda dengan mudah, menggunakan ndb
+
+npm install -g ndb (atau lebih baik lagi, gunakan npx!)
+
+tambahkan debugger ke kode Puppeteer (node) Anda
+
+tambahkan ndb (atau npx ndb) sebelum perintah pengujian Anda. Sebagai contoh:
+
+ndb bercanda atau ndb mocha (atau npx ndb bercanda / npx ndb mocha)
+
+debug tes Anda di dalam chromium seperti bos!

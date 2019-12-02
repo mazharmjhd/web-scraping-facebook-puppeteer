@@ -1,0 +1,24 @@
+Dalang mengikuti versi terbaru pemeliharaan LTS Node.
+
+Catatan: Sebelum v1.18.1, Dalang diperlukan setidaknya Node v6.4.0. Semua versi selanjutnya bergantung pada Node 8.9.0+. Semua contoh di bawah ini menggunakan async / await yang hanya didukung di Node v7.6.0 atau lebih tinggi.
+
+Dalang akan terbiasa dengan orang-orang yang menggunakan kerangka kerja pengujian browser lainnya. Anda membuat instance Browser, membuka halaman, dan kemudian memanipulasinya dengan Puppeteer's API.
+
+Contoh - menavigasi ke https://example.com dan menyimpan tangkapan layar sebagai example.png:
+
+Simpan file sebagai example.js
+
+const puppeteer = butuhkan ('puppeteer');
+
+(async () => {
+   browser browser = tunggu puppeteer.launch ();
+   halaman const = tunggu browser.newPage ();
+   ayo page.goto ('https://example.com');
+   menunggu page.screenshot ({path: 'example.png'});
+
+   menunggu browser.close ();
+}) ();
+Jalankan skrip di baris perintah
+
+simpul example.js
+Dalang menetapkan ukuran halaman awal ke 800 × 600px, yang menentukan ukuran tangkapan layar. Ukuran halaman dapat disesuaikan dengan Page.setViewport ().

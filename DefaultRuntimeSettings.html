@@ -1,0 +1,18 @@
+1. Menggunakan mode Tanpa Kepala
+Dalang meluncurkan Chromium dalam mode tanpa kepala. Untuk meluncurkan versi lengkap Chromium, setel opsi tanpa kepala saat meluncurkan browser:
+
+
+const browser = await puppeteer.launch({headless: false}); // default is true
+
+2. Menjalankan versi paket Chromium
+
+Secara default, Puppeteer mengunduh dan menggunakan versi spesifik Chromium sehingga API-nya dijamin akan bekerja di luar kotak. Untuk menggunakan Puppeteer dengan versi Chrome atau Chromium yang berbeda, berikan jalur yang dapat dieksekusi saat membuat instance Browser:
+
+const browser = await puppeteer.launch({executablePath: '/path/to/Chrome'});
+
+Lihat Puppeteer.launch () untuk informasi lebih lanjut.
+Lihat artikel ini untuk deskripsi perbedaan antara Chromium dan Chrome. Artikel ini menjelaskan beberapa perbedaan untuk pengguna Linux.
+
+3. Membuat profil pengguna baru
+
+Puppeteer membuat profil pengguna Chromium sendiri yang dibersihkan pada setiap proses.

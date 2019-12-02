@@ -1,0 +1,25 @@
+Untuk menggunakan Dalang dalam proyek Anda, jalankan:
+
+npm saya dalang
+# atau "yarn add puppeteer"
+Catatan: Saat Anda menginstal Puppeteer, ia mengunduh versi terbaru Chromium 
+(~ 170MB Mac, ~ 282MB Linux, ~ 280MB Win) yang dijamin dapat bekerja dengan API. Untuk melewati unduhan, lihat variabel Lingkungan.
+
+Dalang adalah produk untuk otomatisasi browser. Saat diinstal, itu mengunduh versi Chromium, yang kemudian ia drive menggunakan puppeteer-core. Sebagai produk pengguna akhir, dalang mendukung banyak variabel PUPPETEER_ * env yang sesuai untuk mengubah perilakunya.
+
+puppeteer-core adalah perpustakaan untuk membantu mengarahkan apa pun yang mendukung protokol DevTools. puppeteer-core tidak mengunduh Chromium saat diinstal. Menjadi pustaka, puppeteer-core sepenuhnya didorong melalui antarmuka terprogram dan mengabaikan semua variabel PUPPETEER_ * env.
+
+Singkatnya, satu-satunya perbedaan antara dalang-dalang dan dalang adalah:
+
+puppeteer-core tidak secara otomatis mengunduh Chromium saat diinstal.
+puppeteer-core mengabaikan semua variabel PUPPETEER_ * env.
+Dalam kebanyakan kasus, Anda akan baik-baik saja menggunakan paket boneka.
+
+Namun, Anda harus menggunakan puppeteer-core jika:
+
+Anda sedang membangun produk pengguna akhir lain atau pustaka di atas protokol DevTools. Misalnya, seseorang dapat membuat generator PDF menggunakan puppeteer-core dan menulis skrip install.js khusus yang mengunduh headless_shell alih-alih Chromium untuk menghemat ruang disk.
+Anda sedang mengikat Puppeteer untuk digunakan di Chrome Extension / browser dengan protokol DevTools di mana mengunduh biner Chromium tambahan tidak diperlukan.
+Saat menggunakan puppeteer-core, ingatlah untuk mengubah baris sertakan:
+
+const puppeteer = membutuhkan ('puppeteer-core');
+Anda kemudian perlu memanggil puppeteer.connect ([options]) atau puppeteer.launch ([options]) dengan opsi eksplisit executablePath.
